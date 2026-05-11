@@ -1,0 +1,267 @@
+// Mock data for ShellCarbon J-Credit Platform Demo
+
+export const company = {
+  nameCN: '台灣綠能科技股份有限公司',
+  nameEN: 'Taiwan Green Energy Technology Co., Ltd.',
+  country: '台灣',
+  city: '台北市',
+  industry: '製造業 / 電子元件',
+  taxId: '12345678',
+  contact: '陳志遠 副總經理',
+  department: '永續發展部',
+};
+
+export const carbonAssets = {
+  totalHeld: 4820,
+  available: 3150,
+  totalValue: 28920000,
+  transferred: 890,
+  declared: 780,
+  creditTypes: [
+    { type: '再生能源', amount: 2100, color: '#22a070' },
+    { type: '節能設備', amount: 1560, color: '#0f766e' },
+    { type: '森林吸收', amount: 820, color: '#15803d' },
+    { type: '其他', amount: 340, color: '#6b7280' },
+  ],
+};
+
+export const transactions = [
+  {
+    id: 'TXN-2024-0892',
+    date: '2024-11-15',
+    type: '購入',
+    creditType: '再生能源',
+    quantity: 500,
+    unitPrice: 6200,
+    amount: 3100000,
+    status: '完成',
+    counterparty: 'Japan Carbon Exchange',
+    projectSource: 'Solar Farm Hokkaido 2023',
+    esgUsable: true,
+    docStatus: '齊全',
+  },
+  {
+    id: 'TXN-2024-0781',
+    date: '2024-10-03',
+    type: '宣告',
+    creditType: '節能設備',
+    quantity: 320,
+    unitPrice: 5800,
+    amount: 1856000,
+    status: '完成',
+    counterparty: '內部使用',
+    projectSource: 'Energy Efficiency Osaka',
+    esgUsable: true,
+    docStatus: '齊全',
+  },
+  {
+    id: 'TXN-2024-0654',
+    date: '2024-08-22',
+    type: '轉讓',
+    creditType: '森林吸收',
+    quantity: 200,
+    unitPrice: 7100,
+    amount: 1420000,
+    status: '完成',
+    counterparty: '供應鏈合作方 A',
+    projectSource: 'Niigata Forest Project',
+    esgUsable: false,
+    docStatus: '部分缺件',
+  },
+  {
+    id: 'TXN-2024-0532',
+    date: '2024-07-10',
+    type: '購入',
+    creditType: '再生能源',
+    quantity: 800,
+    unitPrice: 5950,
+    amount: 4760000,
+    status: '完成',
+    counterparty: 'Mitsui Carbon Trading',
+    projectSource: 'Wind Power Aomori 2022',
+    esgUsable: true,
+    docStatus: '齊全',
+  },
+  {
+    id: 'TXN-2024-0401',
+    date: '2024-05-28',
+    type: '宣告',
+    creditType: '節能設備',
+    quantity: 460,
+    unitPrice: 5500,
+    amount: 2530000,
+    status: '完成',
+    counterparty: '內部使用',
+    projectSource: 'Factory Efficiency Nagoya',
+    esgUsable: true,
+    docStatus: '齊全',
+  },
+];
+
+export const applications = [
+  {
+    id: 'APP-2024-1021',
+    type: '購入',
+    creditType: '再生能源',
+    quantity: 600,
+    status: '日本窗口確認',
+    stepIndex: 3,
+    submittedAt: '2024-12-01',
+  },
+  {
+    id: 'APP-2024-0988',
+    type: '宣告',
+    creditType: '節能設備',
+    quantity: 280,
+    status: '文件確認',
+    stepIndex: 4,
+    submittedAt: '2024-11-25',
+  },
+];
+
+export const progressSteps = [
+  '企業提出申請',
+  'ShellCarbon 初步確認',
+  '日本窗口確認',
+  '報價/條件確認',
+  '文件確認',
+  '完成登錄',
+];
+
+export const scopeData = {
+  year: 2023,
+  scope1: 12450,
+  scope2: 8320,
+  total: 20770,
+  verificationStatus: '第三方查證完成',
+  completeness: 92,
+  documents: [
+    { name: 'Scope 1 排放明細', status: '完成' },
+    { name: 'Scope 2 用電資料', status: '完成' },
+    { name: 'ISO 14064-1 報告', status: '完成' },
+    { name: '第三方查證聲明', status: '完成' },
+    { name: '內部核准紀錄', status: '審核中' },
+  ],
+  jcredit: {
+    dataCompleteness: '高',
+    plannableAmount: 3200,
+    recommendedUse: 'ESG 報告宣告、供應鏈揭露',
+    recommendedType: '再生能源、節能設備',
+    canProceed: true,
+    steps: ['資料匯入', '文件確認', '使用目的確認', '日本市場窗口確認', '購入/宣告流程建立'],
+    currentStep: 2,
+  },
+};
+
+export const esgDocuments = {
+  professional: [
+    { id: 'esg-para', label: 'ESG 報告段落', icon: '📄' },
+    { id: 'supply-chain', label: '供應鏈揭露文字', icon: '🔗' },
+    { id: 'credit-summary', label: '碳信用使用摘要', icon: '📊' },
+    { id: 'brief-summary', label: '內部簡報摘要', icon: '📋' },
+  ],
+  enterprise: [
+    { id: 'tx-proof', label: '交易證明清單', icon: '✅' },
+    { id: 'cancel-proof', label: '註銷/宣告證明清單', icon: '🔖' },
+    { id: 'credit-source', label: '信用來源資料', icon: '🗂️' },
+    { id: 'purpose-doc', label: '用途說明文件', icon: '📝' },
+    { id: 'internal-approval', label: '內部核准紀錄', icon: '🏛️' },
+    { id: 'esg-chapter', label: 'ESG 報告對應章節', icon: '📖' },
+    { id: 'advisor-confirm', label: '第三方顧問確認表', icon: '🤝' },
+    { id: 'risk-note', label: '風險註記表', icon: '⚠️' },
+  ],
+  drafts: {
+    'esg-para': `【ESG 報告段落草稿】
+
+本公司於 2023 年度完成碳盤查，Scope 1 排放量為 12,450 t-CO₂，Scope 2 排放量為 8,320 t-CO₂，合計 20,770 t-CO₂。
+
+為實踐氣候承諾，本公司透過 ShellCarbon 平台購入日本 J-Credit 認證碳信用額度，共計 4,820 t-CO₂，涵蓋再生能源、節能設備及森林吸收等類型，並依 J-Credit 制度完成宣告使用。
+
+本公司將持續優化排放管理，並透過高品質碳信用採購強化 ESG 揭露品質。
+
+⚠️ 本草稿為系統自動產出，正式使用前請依法務、會計、ESG 顧問與揭露規範確認。`,
+    'supply-chain': `【供應鏈揭露文字草稿】
+
+台灣綠能科技股份有限公司已完成 2023 年度碳盤查，並持有日本 J-Credit 認證碳信用額度。
+
+本公司可提供供應鏈夥伴以下碳資產相關文件：
+• J-Credit 持有證明
+• 宣告使用明細
+• ESG 段落參考文字
+
+如需進一步合作，請聯繫永續發展部。
+
+⚠️ 本草稿為系統自動產出，正式使用前請依揭露規範確認。`,
+  } as Record<string, string>,
+};
+
+export const marketData = {
+  latestPrice: 6380,
+  monthlyVolume: 125400,
+  monthlyValue: 798000000,
+  mainCreditType: '再生能源',
+  activityLevel: '活絡',
+  priceHistory: [
+    { month: '2024/01', price: 5200, volume: 98000 },
+    { month: '2024/02', price: 5450, volume: 102000 },
+    { month: '2024/03', price: 5800, volume: 115000 },
+    { month: '2024/04', price: 5650, volume: 108000 },
+    { month: '2024/05', price: 6100, volume: 132000 },
+    { month: '2024/06', price: 6250, volume: 128000 },
+    { month: '2024/07', price: 5950, volume: 119000 },
+    { month: '2024/08', price: 6100, volume: 124000 },
+    { month: '2024/09', price: 6350, volume: 138000 },
+    { month: '2024/10', price: 6200, volume: 121000 },
+    { month: '2024/11', price: 6380, volume: 125400 },
+    { month: '2024/12', price: 6480, volume: 131000 },
+  ],
+  creditTypeComparison: [
+    { type: '再生能源', priceRange: '5,800–6,800', activity: '非常活絡', suitableFor: 'ESG 報告、供應鏈揭露', color: '#22a070' },
+    { type: '節能設備', priceRange: '4,500–5,800', activity: '活絡', suitableFor: '企業宣告、年度配置', color: '#0f766e' },
+    { type: '森林吸收', priceRange: '6,000–7,500', activity: '穩定', suitableFor: '高品質 ESG 揭露', color: '#15803d' },
+    { type: '其他', priceRange: '3,500–5,000', activity: '低', suitableFor: '一般碳中和聲明', color: '#6b7280' },
+  ],
+  enterpriseRankings: [
+    { name: 'Toyota Motor Corp.', industry: '汽車製造', volume: 45200, amount: 289000000, creditType: '再生能源', businessNote: '供應鏈碳中和推動中' },
+    { name: 'Sony Group Corp.', industry: '電子製造', volume: 38100, amount: 241000000, creditType: '節能設備', businessNote: 'ESG 報告強化計畫' },
+    { name: 'Mitsubishi Corp.', industry: '綜合商社', volume: 31500, amount: 198000000, creditType: '再生能源', businessNote: '碳資產配置擴大中' },
+    { name: 'Panasonic Holdings', industry: '電機製造', volume: 28900, amount: 182000000, creditType: '節能設備', businessNote: '工廠碳中和目標 2030' },
+    { name: 'NTT Group', industry: '通信服務', volume: 24300, amount: 153000000, creditType: '再生能源', businessNote: 'RE100 達成路徑' },
+  ],
+  participantCategories: [
+    { category: '綜合商社', count: 12, share: 28, note: '大宗交易主力、場外報價活躍' },
+    { category: '製造業', count: 34, share: 38, note: '供應鏈碳中和需求持續增長' },
+    { category: '金融/顧問', count: 18, share: 18, note: '碳資產管理服務擴張' },
+    { category: '能源業', count: 9, share: 10, note: '再生能源信用主要供給方' },
+    { category: '其他', count: 6, share: 6, note: '各產業新進入者' },
+  ],
+  otcData: [
+    { type: '再生能源', otcPrice: '6,500–7,200', demand: '高', note: '商社主導大宗場外需求' },
+    { type: '節能設備', otcPrice: '5,200–6,000', demand: '中', note: '製造業直接採購' },
+    { type: '森林吸收', otcPrice: '7,000–8,500', demand: '低', note: '特定 ESG 高品質需求' },
+  ],
+};
+
+export const engineData = {
+  totalCO2Captured: 18420,
+  totalMineralMaterial: 892,
+  avgEfficiency: 94.2,
+  connectedSites: 47,
+  dataCompleteness: 88,
+  regions: [
+    { name: 'Tokyo', sites: 14, captured: 5820, efficiency: 95.1 },
+    { name: 'Taipei', sites: 12, captured: 4930, efficiency: 94.8 },
+    { name: 'Osaka', sites: 9, captured: 3710, efficiency: 93.5 },
+    { name: 'Yokohama', sites: 7, captured: 2480, efficiency: 92.9 },
+    { name: 'Nagoya', sites: 5, captured: 1480, efficiency: 91.3 },
+  ],
+  buildings: [
+    { name: 'Tokyo HQ Tower', region: 'Tokyo', captured: 1820, efficiency: 96.2, status: '運行中' },
+    { name: 'Taipei City Office', region: 'Taipei', captured: 1650, efficiency: 95.8, status: '運行中' },
+    { name: 'Osaka Factory A', region: 'Osaka', captured: 1420, efficiency: 94.1, status: '運行中' },
+    { name: 'Yokohama Port Site', region: 'Yokohama', captured: 980, efficiency: 93.7, status: '運行中' },
+    { name: 'Nagoya Manufacturing', region: 'Nagoya', captured: 870, efficiency: 92.4, status: '測試中' },
+    { name: 'Tokyo Data Center', region: 'Tokyo', captured: 820, efficiency: 95.5, status: '運行中' },
+    { name: 'Taipei Industrial Park', region: 'Taipei', captured: 780, efficiency: 94.2, status: '運行中' },
+  ],
+};
