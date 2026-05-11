@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { Building2, MapPin, Briefcase, User, ChevronDown, ChevronUp } from 'lucide-react';
 import { company, carbonAssets, transactions } from '../data/mockData';
@@ -14,17 +15,53 @@ function StatCard({ label, value, sub, color = 'text-gray-900' }: { label: strin
 }
 
 export default function Page1Overview() {
+  const { t } = useTranslation();
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const formatJpy = (v: number) => `¥${(v / 1000000).toFixed(2)}M`;
   const formatTon = (v: number) => `${v.toLocaleString()} t-CO₂`;
 
+  function txTypeLabel(type: string) {
+    const map: Record<string, string> = {
+      '購入': t('common.txTypes.buy'),
+      '賣出': t('common.txTypes.sell'),
+      '轉讓': t('common.txTypes.transfer'),
+      '宣告': t('common.txTypes.declare'),
+    };
+    return map[type] ?? type;
+  }
+
+  function creditTypeLabel(type: string) {
+    const map: Record<string, string> = {
+      '再生能源': t('common.creditTypes.renewable'),
+      '節能設備': t('common.creditTypes.efficiency'),
+      '森林吸收': t('common.creditTypes.forest'),
+      '其他': t('common.creditTypes.other'),
+    };
+    return map[type] ?? type;
+  }
+
+  function statusLabel(s: string) {
+    return s === '完成' ? t('common.status.completed') : s;
+  }
+
+  function docStatusLabel(s: string) {
+    if (s === '齊全') return t('common.docStatus.complete');
+    if (s === '部分缺件') return t('common.docStatus.missing');
+    return s;
+  }
+
+  const creditTypesLocalized = carbonAssets.creditTypes.map((ct) => ({
+    ...ct,
+    type: creditTypeLabel(ct.type),
+  }));
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">企業總覽</h1>
-        <p className="text-sm text-gray-500 mt-1">J-Credit 碳資產帳戶總覽</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('p1.title')}</h1>
+        <p className="text-sm text-gray-500 mt-1">{t('p1.subtitle')}</p>
       </div>
 
       {/* Top half */}
@@ -32,37 +69,37 @@ export default function Page1Overview() {
         {/* Company Info */}
         <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm col-span-1">
           <h2 className="text-sm font-semibold text-gray-700 mb-4 flex items-center gap-2">
-            <Building2 size={16} className="text-shell-green" /> 企業資訊
+            <Building2 size={16} className="text-shell-green" /> {t('p1.companyCard')}
           </h2>
           <div className="space-y-3">
             <div>
-              <div className="text-xs text-gray-400">中文名稱</div>
+              <div className="text-xs text-gray-400">{t('p1.labelCN')}</div>
               <div className="text-sm font-semibold text-gray-900">{company.nameCN}</div>
             </div>
             <div>
-              <div className="text-xs text-gray-400">English Name</div>
+              <div className="text-xs text-gray-400">{t('p1.labelEN')}</div>
               <div className="text-xs text-gray-700">{company.nameEN}</div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <div className="text-xs text-gray-400 flex items-center gap-1"><MapPin size={10} /> 所在地</div>
+                <div className="text-xs text-gray-400 flex items-center gap-1"><MapPin size={10} /> {t('p1.labelLocation')}</div>
                 <div className="text-xs text-gray-700">{company.city}</div>
               </div>
               <div>
-                <div className="text-xs text-gray-400 flex items-center gap-1"><Briefcase size={10} /> 產業</div>
+                <div className="text-xs text-gray-400 flex items-center gap-1"><Briefcase size={10} /> {t('p1.labelIndustry')}</div>
                 <div className="text-xs text-gray-700">{company.industry}</div>
               </div>
               <div>
-                <div className="text-xs text-gray-400">Tax ID</div>
+                <div className="text-xs text-gray-400">{t('p1.labelTaxId')}</div>
                 <div className="text-xs text-gray-700 font-mono">{company.taxId}</div>
               </div>
               <div>
-                <div className="text-xs text-gray-400 flex items-center gap-1"><User size={10} /> 負責人</div>
+                <div className="text-xs text-gray-400 flex items-center gap-1"><User size={10} /> {t('p1.labelContact')}</div>
                 <div className="text-xs text-gray-700">{company.contact}</div>
               </div>
             </div>
             <div>
-              <div className="text-xs text-gray-400">負責部門</div>
+              <div className="text-xs text-gray-400">{t('p1.labelDept')}</div>
               <div className="text-xs text-gray-700">{company.department}</div>
             </div>
           </div>
@@ -71,12 +108,12 @@ export default function Page1Overview() {
         {/* Asset Numbers */}
         <div className="col-span-2 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <StatCard label="累計持有數量" value={formatTon(carbonAssets.totalHeld)} color="text-shell-green" />
-            <StatCard label="目前可用數量" value={formatTon(carbonAssets.available)} color="text-shell-teal" />
-            <StatCard label="總帳面金額" value={formatJpy(carbonAssets.totalValue)} sub="JPY" />
+            <StatCard label={t('p1.statTotal')} value={formatTon(carbonAssets.totalHeld)} color="text-shell-green" />
+            <StatCard label={t('p1.statAvail')} value={formatTon(carbonAssets.available)} color="text-shell-teal" />
+            <StatCard label={t('p1.statValue')} value={formatJpy(carbonAssets.totalValue)} sub="JPY" />
             <div className="grid grid-cols-2 gap-4">
-              <StatCard label="累計已轉讓" value={formatTon(carbonAssets.transferred)} color="text-amber-600" />
-              <StatCard label="累計已宣告" value={formatTon(carbonAssets.declared)} color="text-blue-600" />
+              <StatCard label={t('p1.statTransferred')} value={formatTon(carbonAssets.transferred)} color="text-amber-600" />
+              <StatCard label={t('p1.statDeclared')} value={formatTon(carbonAssets.declared)} color="text-blue-600" />
             </div>
           </div>
         </div>
@@ -84,19 +121,19 @@ export default function Page1Overview() {
 
       {/* Credit Type Distribution */}
       <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-        <h2 className="text-sm font-semibold text-gray-700 mb-4">碳權類型分布</h2>
+        <h2 className="text-sm font-semibold text-gray-700 mb-4">{t('p1.chartTitle')}</h2>
         <div className="flex items-center gap-8">
           <ResponsiveContainer width={200} height={180}>
             <PieChart>
               <Pie
-                data={carbonAssets.creditTypes}
+                data={creditTypesLocalized}
                 cx="50%"
                 cy="50%"
                 innerRadius={50}
                 outerRadius={80}
                 dataKey="amount"
               >
-                {carbonAssets.creditTypes.map((entry, i) => (
+                {creditTypesLocalized.map((entry, i) => (
                   <Cell key={i} fill={entry.color} />
                 ))}
               </Pie>
@@ -104,7 +141,7 @@ export default function Page1Overview() {
             </PieChart>
           </ResponsiveContainer>
           <div className="flex flex-wrap gap-4">
-            {carbonAssets.creditTypes.map((ct) => (
+            {creditTypesLocalized.map((ct) => (
               <div key={ct.type} className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: ct.color }} />
                 <div>
@@ -120,18 +157,18 @@ export default function Page1Overview() {
       {/* Bottom half: Transaction history */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-gray-700">過往歷史交易紀錄</h2>
+          <h2 className="text-sm font-semibold text-gray-700">{t('p1.tableTitle')}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 text-xs text-gray-500">
-                <th className="text-left px-4 py-3 font-medium">日期</th>
-                <th className="text-left px-4 py-3 font-medium">類型</th>
-                <th className="text-left px-4 py-3 font-medium">碳權類型</th>
-                <th className="text-right px-4 py-3 font-medium">數量 (t-CO₂)</th>
-                <th className="text-right px-4 py-3 font-medium">金額 (JPY)</th>
-                <th className="text-center px-4 py-3 font-medium">狀態</th>
+                <th className="text-left px-4 py-3 font-medium">{t('p1.colDate')}</th>
+                <th className="text-left px-4 py-3 font-medium">{t('p1.colType')}</th>
+                <th className="text-left px-4 py-3 font-medium">{t('p1.colCreditType')}</th>
+                <th className="text-right px-4 py-3 font-medium">{t('p1.colQty')}</th>
+                <th className="text-right px-4 py-3 font-medium">{t('p1.colAmount')}</th>
+                <th className="text-center px-4 py-3 font-medium">{t('p1.colStatus')}</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
@@ -150,13 +187,13 @@ export default function Page1Overview() {
                         tx.type === '賣出' ? 'bg-red-100 text-red-700' :
                         tx.type === '轉讓' ? 'bg-amber-100 text-amber-700' :
                         'bg-blue-100 text-blue-700'
-                      }`}>{tx.type}</span>
+                      }`}>{txTypeLabel(tx.type)}</span>
                     </td>
-                    <td className="px-4 py-3 text-gray-700">{tx.creditType}</td>
+                    <td className="px-4 py-3 text-gray-700">{creditTypeLabel(tx.creditType)}</td>
                     <td className="px-4 py-3 text-right text-gray-900 font-mono">{tx.quantity.toLocaleString()}</td>
                     <td className="px-4 py-3 text-right text-gray-900 font-mono">¥{tx.amount.toLocaleString()}</td>
                     <td className="px-4 py-3 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-shell-green/10 text-shell-green">{tx.status}</span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-shell-green/10 text-shell-green">{statusLabel(tx.status)}</span>
                     </td>
                     <td className="px-4 py-3 text-gray-400">
                       {expandedRow === tx.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -166,12 +203,12 @@ export default function Page1Overview() {
                     <tr key={`${tx.id}-detail`} className="bg-gray-50">
                       <td colSpan={7} className="px-4 py-3">
                         <div className="grid grid-cols-4 gap-4 text-xs">
-                          <div><span className="text-gray-400">交易對象：</span><span className="text-gray-700">{tx.counterparty}</span></div>
-                          <div><span className="text-gray-400">專案來源：</span><span className="text-gray-700">{tx.projectSource}</span></div>
-                          <div><span className="text-gray-400">單價：</span><span className="text-gray-700 font-mono">¥{tx.unitPrice.toLocaleString()}/t</span></div>
-                          <div><span className="text-gray-400">文件狀態：</span><span className={tx.docStatus === '齊全' ? 'text-green-600' : 'text-amber-600'}>{tx.docStatus}</span></div>
-                          <div><span className="text-gray-400">ESG 可用：</span><span className={tx.esgUsable ? 'text-green-600' : 'text-gray-500'}>{tx.esgUsable ? '是' : '否'}</span></div>
-                          <div><span className="text-gray-400">交易 ID：</span><span className="text-gray-700 font-mono">{tx.id}</span></div>
+                          <div><span className="text-gray-400">{t('p1.detailCounterparty')}：</span><span className="text-gray-700">{tx.counterparty}</span></div>
+                          <div><span className="text-gray-400">{t('p1.detailProject')}：</span><span className="text-gray-700">{tx.projectSource}</span></div>
+                          <div><span className="text-gray-400">{t('p1.detailUnit')}：</span><span className="text-gray-700 font-mono">¥{tx.unitPrice.toLocaleString()}/t</span></div>
+                          <div><span className="text-gray-400">{t('p1.detailDocStatus')}：</span><span className={tx.docStatus === '齊全' ? 'text-green-600' : 'text-amber-600'}>{docStatusLabel(tx.docStatus)}</span></div>
+                          <div><span className="text-gray-400">{t('p1.detailEsg')}：</span><span className={tx.esgUsable ? 'text-green-600' : 'text-gray-500'}>{tx.esgUsable ? t('common.esgUsable.yes') : t('common.esgUsable.no')}</span></div>
+                          <div><span className="text-gray-400">{t('p1.detailTxId')}：</span><span className="text-gray-700 font-mono">{tx.id}</span></div>
                         </div>
                       </td>
                     </tr>

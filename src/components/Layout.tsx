@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard,
   Settings2,
@@ -8,16 +9,20 @@ import {
   Cpu,
 } from 'lucide-react';
 
-const navItems = [
-  { to: '/', label: '企業總覽', icon: LayoutDashboard, page: 'P1' },
-  { to: '/operations', label: '企業操作', icon: Settings2, page: 'P2' },
-  { to: '/scope', label: 'Scope 1/2', icon: BarChart3, page: 'P3' },
-  { to: '/esg', label: 'ESG 文件', icon: FileText, page: 'P4' },
-  { to: '/market', label: 'J-Credit 市場', icon: Globe, page: 'P5' },
-  { to: '/engine', label: '主引擎', icon: Cpu, page: 'P6' },
-];
+const LANGUAGES = ['zh', 'en', 'ja'] as const;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { t, i18n } = useTranslation();
+
+  const navItems = [
+    { to: '/', label: t('nav.page1'), icon: LayoutDashboard, page: 'P1' },
+    { to: '/operations', label: t('nav.page2'), icon: Settings2, page: 'P2' },
+    { to: '/scope', label: t('nav.page3'), icon: BarChart3, page: 'P3' },
+    { to: '/esg', label: t('nav.page4'), icon: FileText, page: 'P4' },
+    { to: '/market', label: t('nav.page5'), icon: Globe, page: 'P5' },
+    { to: '/engine', label: t('nav.page6'), icon: Cpu, page: 'P6' },
+  ];
+
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
       {/* Sidebar */}
@@ -27,8 +32,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-shell-green flex items-center justify-center text-white font-bold text-sm">S</div>
             <div>
-              <div className="font-semibold text-sm leading-tight">ShellCarbon</div>
-              <div className="text-xs text-gray-400 leading-tight">J-Credit Platform</div>
+              <div className="font-semibold text-sm leading-tight">{t('nav.brand')}</div>
+              <div className="text-xs text-gray-400 leading-tight">{t('nav.subtitle')}</div>
             </div>
           </div>
         </div>
@@ -55,10 +60,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
 
+        {/* Language switcher */}
+        <div className="px-4 py-3 border-t border-white/10">
+          <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">Language</div>
+          <div className="flex gap-1">
+            {LANGUAGES.map((lng) => (
+              <button
+                key={lng}
+                onClick={() => i18n.changeLanguage(lng)}
+                className={`flex-1 py-1.5 text-xs rounded-lg transition-colors font-medium ${
+                  i18n.language === lng
+                    ? 'bg-shell-green text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {t(`lang.${lng}`)}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Footer */}
-        <div className="px-5 py-4 border-t border-white/10 text-xs text-gray-500">
-          <div>Demo v1.0</div>
-          <div>示範資料僅供參考</div>
+        <div className="px-5 py-3 border-t border-white/10 text-xs text-gray-500">
+          <div>{t('nav.footer')}</div>
+          <div>{t('nav.footerSub')}</div>
         </div>
       </aside>
 
