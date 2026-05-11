@@ -5,37 +5,40 @@ import { applications } from '../data/mockData';
 
 function ProgressBar({ steps, currentStep }: { steps: string[]; currentStep: number }) {
   return (
-    <div className="relative">
-      <div className="flex items-center justify-between">
-        {steps.map((step, i) => {
-          const done = i < currentStep;
-          const active = i === currentStep;
-          return (
-            <div key={i} className="flex flex-col items-center flex-1">
-              <div className="relative flex items-center w-full">
-                {i > 0 && (
-                  <div className={`absolute left-0 right-1/2 h-0.5 -translate-y-1/2 top-4 ${done ? 'bg-shell-green' : 'bg-gray-200'}`} />
+    <div className="flex items-start">
+      {steps.map((step, i) => {
+        const done = i < currentStep;
+        const active = i === currentStep;
+        return (
+          <div key={i} className={`flex flex-col items-center ${i < steps.length - 1 ? 'flex-1' : ''}`}>
+            {/* Icon row with connecting lines */}
+            <div className="flex items-center w-full">
+              {/* Left line */}
+              {i > 0 && (
+                <div className={`flex-1 h-0.5 ${i <= currentStep ? 'bg-shell-green' : 'bg-gray-200'}`} />
+              )}
+              {/* Icon */}
+              <div className="flex-shrink-0">
+                {done ? (
+                  <CheckCircle2 size={20} className="text-shell-green" />
+                ) : active ? (
+                  <div className="w-5 h-5 rounded-full bg-shell-green ring-2 ring-shell-green/30" />
+                ) : (
+                  <Circle size={20} className="text-gray-300" />
                 )}
-                {i < steps.length - 1 && (
-                  <div className={`absolute left-1/2 right-0 h-0.5 -translate-y-1/2 top-4 ${(done || active) && i < currentStep ? 'bg-shell-green' : 'bg-gray-200'}`} />
-                )}
-                <div className="relative z-10 mx-auto">
-                  {done ? (
-                    <CheckCircle2 size={20} className="text-shell-green" />
-                  ) : active ? (
-                    <div className="w-5 h-5 rounded-full bg-shell-green border-2 border-white shadow-md ring-2 ring-shell-green/30" />
-                  ) : (
-                    <Circle size={20} className="text-gray-300" />
-                  )}
-                </div>
               </div>
-              <div className={`mt-2 text-xs text-center leading-tight max-w-[80px] ${active ? 'text-shell-green font-semibold' : done ? 'text-gray-600' : 'text-gray-400'}`}>
-                {step}
-              </div>
+              {/* Right line */}
+              {i < steps.length - 1 && (
+                <div className={`flex-1 h-0.5 ${i < currentStep ? 'bg-shell-green' : 'bg-gray-200'}`} />
+              )}
             </div>
-          );
-        })}
-      </div>
+            {/* Label */}
+            <div className={`mt-2 text-xs text-center leading-tight max-w-[80px] ${active ? 'text-shell-green font-semibold' : done ? 'text-gray-600' : 'text-gray-400'}`}>
+              {step}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
