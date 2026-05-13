@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Copy, Download, Save, Send, FileEdit, AlertCircle, Lock } from 'lucide-react';
+import { Copy, Download, Save, Send, FileEdit, AlertCircle, Lock, Package, ExternalLink, ArrowUpRight } from 'lucide-react';
 import { esgDocuments } from '../data/mockData';
 
 type PlanType = 'professional' | 'enterprise';
@@ -59,6 +59,20 @@ export default function Page4ESG() {
         </div>
       </div>
 
+      {/* Supply chain client reply pack button */}
+      <div className="bg-gradient-to-br from-shell-green/5 to-shell-teal/5 border border-shell-green/20 rounded-xl p-4 flex items-start gap-4">
+        <div className="p-2.5 bg-shell-green/10 rounded-lg flex-shrink-0">
+          <Package size={18} className="text-shell-green" />
+        </div>
+        <div className="flex-1">
+          <div className="text-sm font-semibold text-gray-800 mb-0.5">{t('p4.supplyChainPackBtn')}</div>
+          <p className="text-xs text-gray-500 leading-relaxed">{t('p4.supplyChainPackDesc')}</p>
+        </div>
+        <button className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
+          <ArrowUpRight size={13} /> {t('p4.supplyChainPackBtn')}
+        </button>
+      </div>
+
       {/* Top: Document type icons */}
       <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
         <div className="mb-3">
@@ -70,14 +84,17 @@ export default function Page4ESG() {
                 <button
                   key={id}
                   onClick={() => handleSelectDoc(id, false)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm transition-all ${
+                  className={`flex flex-col items-start px-4 py-2.5 rounded-lg border text-sm transition-all ${
                     isSelected
                       ? 'bg-shell-green text-white border-shell-green shadow-sm'
                       : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-shell-green/40 hover:bg-shell-green/5'
                   }`}
                 >
-                  <span>{docIcons[id]}</span>
-                  <span>{t(`p4.docs.${id}`)}</span>
+                  <div className="flex items-center gap-2">
+                    <span>{docIcons[id]}</span>
+                    <span>{t(`p4.docs.${id}`)}</span>
+                  </div>
+                  <div className={`text-xs mt-0.5 ${isSelected ? 'text-white/70' : 'text-gray-400'}`}>{t(`p4.docPurposes.${id}`)}</div>
                 </button>
               );
             })}
@@ -99,7 +116,7 @@ export default function Page4ESG() {
                 <button
                   key={id}
                   onClick={() => handleSelectDoc(id, isLocked)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm transition-all ${
+                  className={`flex flex-col items-start px-4 py-2.5 rounded-lg border text-sm transition-all ${
                     isLocked
                       ? 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed'
                       : isSelected
@@ -107,9 +124,12 @@ export default function Page4ESG() {
                       : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-shell-green/40'
                   }`}
                 >
-                  <span>{docIcons[id]}</span>
-                  <span>{t(`p4.docs.${id}`)}</span>
-                  {isLocked && <Lock size={12} />}
+                  <div className="flex items-center gap-2">
+                    <span>{docIcons[id]}</span>
+                    <span>{t(`p4.docs.${id}`)}</span>
+                    {isLocked && <Lock size={12} />}
+                  </div>
+                  <div className={`text-xs mt-0.5 ${isLocked ? 'text-gray-300' : isSelected ? 'text-white/70' : 'text-gray-400'}`}>{t(`p4.docPurposes.${id}`)}</div>
                 </button>
               );
             })}
@@ -167,6 +187,19 @@ export default function Page4ESG() {
           <AlertCircle size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-amber-700 leading-relaxed">{t('p4.disclaimer')}</p>
         </div>
+      </div>
+
+      {/* CTA bar */}
+      <div className="flex flex-wrap gap-3">
+        <button className="flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
+          <Package size={13} /> {t('p4.ctaPack')}
+        </button>
+        <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50">
+          <Download size={13} /> {t('p4.ctaExport')}
+        </button>
+        <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50">
+          <ExternalLink size={13} /> {t('p4.ctaEnterprise')}
+        </button>
       </div>
     </div>
   );

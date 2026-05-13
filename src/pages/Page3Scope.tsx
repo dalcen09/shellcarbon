@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { CheckCircle2, Clock, AlertCircle, FileCheck, ChevronRight } from 'lucide-react';
+import { CheckCircle2, Clock, AlertCircle, FileCheck, ChevronRight, Info, PlayCircle, ShoppingCart, FileText } from 'lucide-react';
 import { scopeData } from '../data/mockData';
 
 function DocStatusBadge({ status, t }: { status: string; t: (k: string) => string }) {
@@ -45,6 +45,12 @@ export default function Page3Scope() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{t('p3.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('p3.subtitle')}</p>
+      </div>
+
+      {/* Positioning note banner */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
+        <Info size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+        <p className="text-xs text-blue-700 leading-relaxed">{t('p3.positioningNote')}</p>
       </div>
 
       {/* Top half: Emissions data */}
@@ -116,9 +122,33 @@ export default function Page3Scope() {
         </div>
       </div>
 
-      {/* Explanation */}
-      <div className="bg-shell-green/5 border border-shell-green/20 rounded-lg p-4 text-xs text-gray-600 leading-relaxed">
-        💡 {t('p3.note')}
+      {/* Onboarding Readiness Indicators */}
+      <div className="bg-gradient-to-br from-shell-green/5 to-shell-teal/5 border border-shell-green/20 rounded-xl p-5">
+        <h2 className="text-sm font-semibold text-shell-green-dark mb-4">{t('p3.readinessTitle')}</h2>
+        <div className="grid grid-cols-4 gap-4 mb-4">
+          {[
+            { label: t('p3.readinessCompleteness'), value: '92%' },
+            { label: t('p3.readinessLevel'),        value: t('p3.readinessLevelVal') },
+            { label: t('p3.readinessPlannable'),     value: '3,200 t-CO₂' },
+            { label: t('p3.readinessUse'),           value: t('p3.readinessUseVal') },
+          ].map((item) => (
+            <div key={item.label} className="bg-white/70 rounded-lg px-3 py-2">
+              <div className="text-xs text-gray-400">{item.label}</div>
+              <div className="text-sm font-semibold text-gray-800">{item.value}</div>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <button className="flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
+            <PlayCircle size={13} /> {t('p3.ctaGenerate')}
+          </button>
+          <button className="flex items-center gap-1.5 px-4 py-2 border border-shell-green text-shell-green text-xs font-semibold rounded-lg hover:bg-shell-green/5">
+            <ShoppingCart size={13} /> {t('p3.ctaBuy')}
+          </button>
+          <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50">
+            <FileText size={13} /> {t('p3.ctaEsg')}
+          </button>
+        </div>
       </div>
 
       {/* Bottom half: J-Credit status */}
