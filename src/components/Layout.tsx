@@ -15,12 +15,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { t, i18n } = useTranslation();
 
   const navItems = [
-    { to: '/', label: t('nav.page1'), icon: LayoutDashboard, page: 'P1' },
-    { to: '/operations', label: t('nav.page2'), icon: Settings2, page: 'P2' },
-    { to: '/scope', label: t('nav.page3'), icon: BarChart3, page: 'P3' },
-    { to: '/esg', label: t('nav.page4'), icon: FileText, page: 'P4' },
-    { to: '/market', label: t('nav.page5'), icon: Globe, page: 'P5' },
-    { to: '/engine', label: t('nav.page6'), icon: Cpu, page: 'P6' },
+    { to: '/', label: t('nav.page1'), icon: LayoutDashboard },
+    { to: '/operations', label: t('nav.page2'), icon: Settings2 },
+    { to: '/scope', label: t('nav.page3'), icon: BarChart3 },
+    { to: '/esg', label: t('nav.page4'), icon: FileText },
+    { to: '/market', label: t('nav.page5'), icon: Globe },
+    { to: '/engine', label: t('nav.page6'), icon: Cpu },
   ];
 
   return (
@@ -40,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          {navItems.map(({ to, label, icon: Icon, page }) => (
+          {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
@@ -55,7 +55,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               <Icon size={16} />
               <span>{label}</span>
-              <span className="ml-auto text-xs opacity-40">{page}</span>
             </NavLink>
           ))}
         </nav>
