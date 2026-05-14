@@ -25,6 +25,7 @@ function CtaBar({ children }: { children: React.ReactNode }) {
 export default function Page1Overview() {
   const { t } = useTranslation();
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [showTransactions, setShowTransactions] = useState(false);
 
   const formatJpy = (v: number) => `¥${(v / 1000000).toFixed(2)}M`;
   const formatTon = (v: number) => `${v.toLocaleString()} t-CO₂`;
@@ -133,10 +134,14 @@ export default function Page1Overview() {
 
       {/* Transaction history */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-100">
+        <button
+          onClick={() => setShowTransactions(!showTransactions)}
+          className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+        >
           <h2 className="text-sm font-semibold text-gray-700">{t('p1.tableTitle')}</h2>
-        </div>
-        <div className="overflow-x-auto">
+          {showTransactions ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+        </button>
+        {showTransactions && <div className="overflow-x-auto border-t border-gray-100">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 text-xs text-gray-500">
@@ -183,7 +188,7 @@ export default function Page1Overview() {
               ))}
             </tbody>
           </table>
-        </div>
+        </div>}
       </div>
 
       {/* Recommendation block */}
