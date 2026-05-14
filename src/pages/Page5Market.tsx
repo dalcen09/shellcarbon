@@ -61,11 +61,6 @@ export default function Page5Market() {
     const map: Record<string, string> = { '再生能源': t('common.creditTypes.renewable'), '節能設備': t('common.creditTypes.efficiency'), '森林吸收': t('common.creditTypes.forest'), '其他': t('common.creditTypes.other') };
     return map[type] ?? type;
   }
-  function txTypeLabel(type: string) {
-    const map: Record<string, string> = { '購入': t('common.txTypes.buy'), '賣出': t('common.txTypes.sell'), '轉讓': t('common.txTypes.transfer'), '購入 / 轉讓': `${t('common.txTypes.buy')} / ${t('common.txTypes.transfer')}` };
-    return map[type] ?? type;
-  }
-
   const treeData = creditTypeTreemapData.map(ct => ({
     name: ct.name,
     size: treeMode === 'monthly' ? ct.size : ct.cumulativeSize,
