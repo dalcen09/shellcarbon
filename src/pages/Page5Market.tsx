@@ -5,7 +5,6 @@ import { TrendingUp, Activity, Building2, Lock, Star, FileSpreadsheet, FileText,
 import { marketData, creditTypeTreemapData } from '../data/mockData';
 
 type Plan = 'professional' | 'enterprise';
-type TreeMode = 'monthly' | 'cumulative';
 
 const DIAGNOSTIC_QUESTIONS = [
   { key: 'q1', opts: ['ESG 報告揭露', '供應鏈客戶要求', '國際客戶要求', '先理解日本碳權市場', '品牌形象 / CSR', '計劃買入 / 持有 / 移轉'] },
@@ -37,7 +36,6 @@ export default function Page5Market() {
   const [plan, setPlan] = useState<Plan>('professional');
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [hoveredType, setHoveredType] = useState<string | null>(null);
-  const [treeMode, setTreeMode] = useState<TreeMode>('monthly');
   const [diagStep, setDiagStep] = useState<number>(-1);
   const [diagAnswers, setDiagAnswers] = useState<Record<number, string>>({});
 
@@ -63,7 +61,7 @@ export default function Page5Market() {
   }
   const treeData = creditTypeTreemapData.map(ct => ({
     name: ct.name,
-    size: treeMode === 'monthly' ? ct.size : ct.cumulativeSize,
+    size: ct.size,
     color: ct.color,
     activity: ct.activity,
   }));
@@ -133,10 +131,6 @@ export default function Page5Market() {
         <div className="col-span-3 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-700">{t('p5.treemapTitle')}</h2>
-            <div className="flex gap-1 bg-gray-100 rounded-lg p-0.5">
-              <button onClick={() => setTreeMode('monthly')} className={`px-3 py-1 text-xs rounded-md transition-colors ${treeMode === 'monthly' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-500'}`}>{t('p5.treemapMonthly')}</button>
-              <button onClick={() => setTreeMode('cumulative')} className={`px-3 py-1 text-xs rounded-md transition-colors ${treeMode === 'cumulative' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-500'}`}>{t('p5.treemapCumulative')}</button>
-            </div>
           </div>
           <p className="text-xs text-gray-400 mb-3">{t('p5.treemapHint')}</p>
           <ResponsiveContainer width="100%" height={260}>
