@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { CheckCircle2, Clock, AlertCircle, FileCheck, ChevronRight, Info, PlayCircle, ShoppingCart, FileText } from 'lucide-react';
+import { CheckCircle2, Clock, AlertCircle, FileCheck, ChevronRight, Info, PlayCircle, ShoppingCart } from 'lucide-react';
 import { scopeData } from '../data/mockData';
 
 function DocStatusBadge({ status, t }: { status: string; t: (k: string) => string }) {
@@ -142,11 +142,8 @@ export default function Page3Scope() {
           <button className="flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
             <PlayCircle size={13} /> {t('p3.ctaGenerate')}
           </button>
-          <button className="flex items-center gap-1.5 px-4 py-2 border border-shell-green text-shell-green text-xs font-semibold rounded-lg hover:bg-shell-green/5">
+          <button className="flex items-center gap-1.5 px-8 py-2 border border-shell-green text-shell-green text-xs font-semibold rounded-lg hover:bg-shell-green/5">
             <ShoppingCart size={13} /> {t('p3.ctaBuy')}
-          </button>
-          <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50">
-            <FileText size={13} /> {t('p3.ctaEsg')}
           </button>
         </div>
       </div>
