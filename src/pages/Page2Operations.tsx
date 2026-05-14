@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShoppingCart, TrendingDown, ArrowRightLeft, Stamp, CheckCircle2, Circle, AlertCircle, Users, Package, PlayCircle, ClipboardList, HelpCircle } from 'lucide-react';
+import { ShoppingCart, TrendingDown, ArrowRightLeft, Stamp, CheckCircle2, Circle, AlertCircle, Users, PlayCircle, ClipboardList, HelpCircle } from 'lucide-react';
 import { applications } from '../data/mockData';
 
 function ProgressBar({ steps, currentStep }: { steps: string[]; currentStep: number }) {
@@ -59,7 +59,7 @@ export default function Page2Operations() {
 
       {/* 4 operation cards with business context */}
       <div className="grid grid-cols-2 gap-5">
-        {operations.map(({ id, label, sub, icon: Icon, color, iconColor, desc, suitable, output }) => (
+        {operations.map(({ id, label, sub, icon: Icon, color, iconColor, desc, suitable }) => (
           <button key={id} onClick={() => setShowModal(id)} className={`text-left p-5 rounded-xl border-2 transition-all hover:shadow-md hover:-translate-y-0.5 ${color}`}>
             <div className="flex items-start gap-3 mb-3">
               <div className={`p-2.5 rounded-lg bg-white/60 flex-shrink-0 ${iconColor}`}><Icon size={24} /></div>
@@ -69,14 +69,10 @@ export default function Page2Operations() {
               </div>
             </div>
             <p className="text-xs opacity-80 leading-relaxed mb-3">{desc}</p>
-            <div className="space-y-1.5 border-t border-current/10 pt-3">
+            <div className="border-t border-current/10 pt-3">
               <div className="flex gap-2 text-xs">
                 <Users size={11} className="flex-shrink-0 mt-0.5 opacity-60" />
                 <span className="opacity-75"><span className="font-medium">{t('p2.labelSuitable')}：</span>{suitable}</span>
-              </div>
-              <div className="flex gap-2 text-xs">
-                <Package size={11} className="flex-shrink-0 mt-0.5 opacity-60" />
-                <span className="opacity-75"><span className="font-medium">{t('p2.labelOutput')}：</span>{output}</span>
               </div>
             </div>
           </button>
