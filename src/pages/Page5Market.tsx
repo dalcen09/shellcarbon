@@ -279,63 +279,6 @@ export default function Page5Market() {
       {/* Enterprise sections */}
       {isEnterprise ? (
         <div className="space-y-5">
-          {/* Top 10 rankings */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
-              <h2 className="text-sm font-semibold text-gray-700">{t('p5.top10Title')}</h2>
-              <span className="text-xs bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full font-medium">{t('p5.top10Note')}</span>
-            </div>
-            <table className="w-full text-sm">
-              <thead><tr className="bg-gray-50 text-xs text-gray-500">
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colRank')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colEnterprise')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colIndustry')}</th>
-                <th className="text-right px-4 py-2.5 font-medium">{t('p5.colVolume')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colCreditType')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colDirection')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colLastTx')}</th>
-              </tr></thead>
-              <tbody className="divide-y divide-gray-50">
-                {marketData.top10Rankings.map((row) => (
-                  <tr key={row.rank} className="hover:bg-gray-50">
-                    <td className="px-4 py-2.5 font-mono text-xs text-gray-400">{row.rank}</td>
-                    <td className="px-4 py-2.5 font-medium text-gray-800 text-xs">{row.name}</td>
-                    <td className="px-4 py-2.5 text-gray-500 text-xs">{row.industry}</td>
-                    <td className="px-4 py-2.5 text-right font-mono text-gray-700 text-xs">{row.volume.toLocaleString()}</td>
-                    <td className="px-4 py-2.5 text-xs text-gray-600">{creditTypeLabel(row.creditType)}</td>
-                    <td className="px-4 py-2.5 text-xs text-gray-600">{txTypeLabel(row.direction)}</td>
-                    <td className="px-4 py-2.5 text-xs text-gray-400 font-mono">{row.lastTx}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Potential partners */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-100"><h2 className="text-sm font-semibold text-gray-700">{t('p5.partnersTitle')}</h2></div>
-            <table className="w-full text-sm">
-              <thead><tr className="bg-gray-50 text-xs text-gray-500">
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colEnterprise')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colIndustry')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colDemand')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colReason')}</th>
-                <th className="text-left px-4 py-2.5 font-medium">{t('p5.colAction')}</th>
-              </tr></thead>
-              <tbody className="divide-y divide-gray-50">
-                {marketData.potentialPartners.map((p) => (
-                  <tr key={p.name} className="hover:bg-gray-50">
-                    <td className="px-4 py-2.5 font-medium text-gray-800 text-xs">{p.name}</td>
-                    <td className="px-4 py-2.5 text-gray-500 text-xs">{p.industry}</td>
-                    <td className="px-4 py-2.5 text-xs text-gray-600">{p.demand}</td>
-                    <td className="px-4 py-2.5 text-xs text-gray-500">{p.reason}</td>
-                    <td className="px-4 py-2.5"><span className="text-xs bg-shell-green/10 text-shell-green font-medium px-2 py-0.5 rounded-full">{p.action}</span></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
           {/* Industry analysis */}
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-gray-100"><h2 className="text-sm font-semibold text-gray-700">{t('p5.industryTitle')}</h2></div>
