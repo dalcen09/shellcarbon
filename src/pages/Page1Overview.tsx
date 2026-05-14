@@ -6,9 +6,9 @@ import { company, carbonAssets, transactions } from '../data/mockData';
 
 function StatCard({ label, value, sub, color = 'text-gray-900' }: { label: string; value: string; sub?: string; color?: string }) {
   return (
-    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+    <div className="bg-white rounded-xl p-3 md:p-5 border border-gray-100 shadow-sm">
       <div className="text-xs text-gray-500 mb-1">{label}</div>
-      <div className={`text-2xl font-bold ${color}`}>{value}</div>
+      <div className={`text-base md:text-2xl font-bold leading-tight ${color}`}>{value}</div>
       {sub && <div className="text-xs text-gray-400 mt-0.5">{sub}</div>}
     </div>
   );
