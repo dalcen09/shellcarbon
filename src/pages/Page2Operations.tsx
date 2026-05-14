@@ -51,14 +51,14 @@ export default function Page2Operations() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{t('p2.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('p2.subtitle')}</p>
       </div>
 
       {/* 4 operation cards with business context */}
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {operations.map(({ id, label, sub, icon: Icon, color, iconColor, desc, suitable }) => (
           <button key={id} onClick={() => setShowModal(id)} className={`text-left p-5 rounded-xl border-2 transition-all hover:shadow-md hover:-translate-y-0.5 ${color}`}>
             <div className="flex items-start gap-3 mb-3">

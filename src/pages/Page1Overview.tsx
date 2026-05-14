@@ -47,14 +47,14 @@ export default function Page1Overview() {
   const creditTypesLocalized = carbonAssets.creditTypes.map((ct) => ({ ...ct, type: creditTypeLabel(ct.type) }));
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{t('p1.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('p1.subtitle')}</p>
       </div>
 
       {/* Top half: company + assets */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm col-span-1">
           <h2 className="text-sm font-semibold text-gray-700 mb-4 flex items-center gap-2">
             <Building2 size={16} className="text-shell-green" /> {t('p1.companyCard')}
@@ -93,7 +93,7 @@ export default function Page1Overview() {
           </div>
         </div>
 
-        <div className="col-span-2 space-y-4">
+        <div className="md:col-span-2 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <StatCard label={t('p1.statTotal')} value={formatTon(carbonAssets.totalHeld)} color="text-shell-green" />
             <StatCard label={t('p1.statAvail')} value={formatTon(carbonAssets.available)} color="text-shell-teal" />
@@ -198,7 +198,7 @@ export default function Page1Overview() {
           <h2 className="text-sm font-semibold text-shell-green-dark">{t('p1.recTitle')}</h2>
         </div>
         <p className="text-xs text-gray-600 leading-relaxed mb-4">{t('p1.recDesc')}</p>
-        <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
           {[
             { label: t('p1.recPlannable'), value: t('p1.recPlannableVal') },
             { label: t('p1.recUse'),       value: t('p1.recUseVal') },

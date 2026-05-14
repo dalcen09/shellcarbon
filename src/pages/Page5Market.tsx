@@ -75,7 +75,7 @@ export default function Page5Market() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -106,7 +106,7 @@ export default function Page5Market() {
       </div>
 
       {/* KPI Cards */}
-      <div className={`grid gap-4 ${isEnterprise ? 'grid-cols-6' : 'grid-cols-5'}`}>
+      <div className={`grid gap-4 ${isEnterprise ? 'grid-cols-2 md:grid-cols-6' : 'grid-cols-2 md:grid-cols-5'}`}>
         {[
           { label: t('p5.latestPrice'), value: `¥${marketData.latestPrice.toLocaleString()}`, sub: t('common.units.jpyPerT'), icon: TrendingUp, color: 'text-shell-green' },
           { label: t('p5.monthlyVolume'), value: `${(marketData.monthlyVolume / 1000).toFixed(1)}k`, sub: 't-CO₂', icon: Activity, color: 'text-blue-600' },
@@ -126,9 +126,9 @@ export default function Page5Market() {
       <div className="bg-shell-green/5 border border-shell-green/15 rounded-lg px-4 py-3 text-xs text-gray-600 leading-relaxed">{t('p5.marketNote')}</div>
 
       {/* Treemap + Info Panel */}
-      <div className="grid grid-cols-5 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
         {/* Treemap */}
-        <div className="col-span-3 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+        <div className="md:col-span-3 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-700">{t('p5.treemapTitle')}</h2>
           </div>
@@ -182,7 +182,7 @@ export default function Page5Market() {
         </div>
 
         {/* Info Panel */}
-        <div className="col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+        <div className="md:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
           {panelItem ? (
             <>
               {/* Credit type header */}
@@ -256,7 +256,7 @@ export default function Page5Market() {
       </div>
 
       {/* Business tips */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[{ titleKey: 'p5.tip1Title', descKey: 'p5.tip1Desc' }, { titleKey: 'p5.tip2Title', descKey: 'p5.tip2Desc' }, { titleKey: 'p5.tip3Title', descKey: 'p5.tip3Desc' }].map((item) => (
           <div key={item.titleKey} className="bg-shell-green/5 border border-shell-green/15 rounded-xl p-4">
             <div className="text-sm font-semibold text-shell-green-dark mb-1">{t(item.titleKey)}</div>
@@ -330,7 +330,7 @@ export default function Page5Market() {
 
                 <p className="text-sm font-semibold text-gray-800 mb-3">{t(`p5.diagQ${diagStep + 1}`)}</p>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {DIAGNOSTIC_QUESTIONS[diagStep].opts.map((opt) => (
                     <button
                       key={opt}

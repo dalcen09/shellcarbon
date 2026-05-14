@@ -47,7 +47,7 @@ export default function Page4ESG() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t('p4.title')}</h1>
@@ -140,8 +140,8 @@ export default function Page4ESG() {
       {/* Bottom: Editor */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         {/* Toolbar */}
-        <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="px-5 py-3 border-b border-gray-100 flex flex-wrap items-center gap-2 overflow-x-auto">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <FileEdit size={14} className="text-gray-500" />
             <span className="text-sm font-semibold text-gray-700">
               {allDocIds.includes(selectedDoc) ? t(`p4.docs.${selectedDoc}`) : selectedDoc}
@@ -150,7 +150,7 @@ export default function Page4ESG() {
               <span className="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">{t('p4.draftGenerated')}</span>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 ml-auto">
             <button onClick={handleGenerate} className="px-3 py-1.5 text-xs bg-shell-green text-white rounded-lg hover:bg-shell-green-dark transition-colors">
               {t('p4.generateBtn')}
             </button>

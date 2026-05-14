@@ -41,7 +41,7 @@ export default function Page3Scope() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{t('p3.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('p3.subtitle')}</p>
@@ -54,10 +54,10 @@ export default function Page3Scope() {
       </div>
 
       {/* Top half: Emissions data */}
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {/* Key emissions numbers */}
-        <div className="col-span-2 space-y-4">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="md:col-span-2 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               { label: t('p3.scope1'), value: `${scopeData.scope1.toLocaleString()} t-CO₂`, color: 'text-orange-600', bg: 'bg-orange-50' },
               { label: t('p3.scope2'), value: `${scopeData.scope2.toLocaleString()} t-CO₂`, color: 'text-yellow-600', bg: 'bg-yellow-50' },
@@ -125,7 +125,7 @@ export default function Page3Scope() {
       {/* Onboarding Readiness Indicators */}
       <div className="bg-gradient-to-br from-shell-green/5 to-shell-teal/5 border border-shell-green/20 rounded-xl p-5">
         <h2 className="text-sm font-semibold text-shell-green-dark mb-4">{t('p3.readinessTitle')}</h2>
-        <div className="grid grid-cols-4 gap-4 mb-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {[
             { label: t('p3.readinessCompleteness'), value: '92%' },
             { label: t('p3.readinessLevel'),        value: t('p3.readinessLevelVal') },
@@ -152,7 +152,7 @@ export default function Page3Scope() {
       <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
         <h2 className="text-sm font-semibold text-gray-700 mb-5">{t('p3.jcreditTitle')}</h2>
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-3">
             {[
               { label: t('p3.jcDataCompleteness'), value: scopeData.jcredit.dataCompleteness },
