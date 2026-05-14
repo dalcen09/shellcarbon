@@ -58,14 +58,14 @@ export default function Page6Engine() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{t('p6.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('p6.subtitle')}</p>
       </div>
 
       {/* Top: Cumulative metrics */}
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <MetricCard label={t('p6.metricCO2')} value={engineData.totalCO2Captured} unit="t-CO₂" icon={Activity} color="bg-shell-green" />
         <MetricCard label={t('p6.metricMineral')} value={engineData.totalMineralMaterial} unit={t('p6.metricMineralSub')} icon={Database} color="bg-shell-teal" />
         <MetricCard label={t('p6.metricEfficiency')} value={`${engineData.avgEfficiency}%`} unit={t('p6.metricEfficiencySub')} icon={Cpu} color="bg-blue-500" />
@@ -89,7 +89,7 @@ export default function Page6Engine() {
       </div>
 
       {/* Bottom: Regional + Building rankings */}
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Region rankings */}
         <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
@@ -175,7 +175,7 @@ export default function Page6Engine() {
           <h2 className="text-sm font-semibold text-gray-700">{t('p6.roadmapTitle')}</h2>
         </div>
         <p className="text-xs text-gray-500 leading-relaxed mb-5">{t('p6.roadmapDesc')}</p>
-        <div className="flex items-stretch gap-3">
+        <div className="flex flex-col md:flex-row items-stretch gap-3">
           {phases.map((phase, i) => (
             <div key={phase.num} className="flex items-center gap-3 flex-1">
               <div className={`flex-1 rounded-xl border p-4 ${phase.bgColor}`}>
