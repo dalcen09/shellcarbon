@@ -254,6 +254,84 @@ export const marketData = {
   ],
 };
 
+export const creditTypeTreemapData = [
+  {
+    name: '再生能源',
+    size: 58000,
+    cumulativeSize: 620000,
+    priceRange: '5,800–6,800',
+    activity: '非常活絡',
+    esgDir: 'ESG 報告、供應鏈揭露',
+    note: '需求最強勁的信用類型，適合 ESG 初次導入企業',
+    color: '#22a070',
+    companies: [
+      { name: '三井物產株式會社', type: '商社', role: '市場參加者', creditTypes: 'J-Credit / GX Credits', tags: ['交易窗口型', '產業標竿型'], score: 88, reason: '適合作為海外企業理解日本碳權市場、交易窗口與日本市場進入路徑的參考對象' },
+      { name: 'Toyota Motor', type: '汽車製造', role: '市場參加者', creditTypes: 'J-Credit', tags: ['大量採購型', '供應鏈 ESG'], score: 84, reason: '汽車業最大碳信用購入企業，供應鏈 ESG 要求強' },
+      { name: 'Mizuho Bank', type: '金融', role: '市場參加者', creditTypes: 'J-Credit', tags: ['ESG 金融型'], score: 80, reason: '可連結企業客戶與永續金融方案，適合 ESG 揭露需求企業' },
+    ],
+  },
+  {
+    name: '節能設備',
+    size: 34000,
+    cumulativeSize: 310000,
+    priceRange: '4,500–5,800',
+    activity: '活絡',
+    esgDir: '年度宣告、企業碳中和',
+    note: '製造業與工廠型企業首選，價格相對穩定',
+    color: '#0f766e',
+    companies: [
+      { name: 'Daikin Industries', type: '空調設備', role: '市場參加者', creditTypes: 'J-Credit', tags: ['設備節能型', '技術合作型'], score: 82, reason: '與 ShellCarbon 硬體節能應用概念高度相關' },
+      { name: 'Hitachi', type: '製造/電機', role: '市場參加者', creditTypes: 'J-Credit', tags: ['大型製造型'], score: 78, reason: '節能設備大量採購，供應鏈碳揭露要求強' },
+      { name: 'ENEOS', type: '能源', role: '市場參加者', creditTypes: 'J-Credit', tags: ['能源轉型型'], score: 75, reason: '能源業積極採購節能設備信用，轉型需求強' },
+    ],
+  },
+  {
+    name: '森林吸收',
+    size: 18000,
+    cumulativeSize: 165000,
+    priceRange: '6,000–7,500',
+    activity: '穩定',
+    esgDir: '高品質 ESG 揭露',
+    note: '高單價、高 ESG 故事性，適合品牌型企業',
+    color: '#15803d',
+    companies: [
+      { name: 'Mitsubishi Corp.', type: '商社', role: '市場參加者', creditTypes: 'J-Credit / 森林吸收', tags: ['高品質 ESG 型', '交易窗口型'], score: 85, reason: '商社可作為日本市場交易橋樑，重視高品質 ESG 揭露' },
+      { name: 'Sumitomo Corp.', type: '商社', role: '市場參加者', creditTypes: 'J-Credit', tags: ['轉讓型'], score: 79, reason: '森林吸收信用轉讓窗口，具備國際市場連結' },
+      { name: 'Panasonic', type: '電機', role: '市場參加者', creditTypes: 'J-Credit', tags: ['品牌 ESG 型'], score: 74, reason: '品牌型企業重視高故事性 ESG 揭露，採購高品質信用' },
+    ],
+  },
+  {
+    name: '再生能源熱/生質能',
+    size: 9000,
+    cumulativeSize: 72000,
+    priceRange: '5,000–6,500',
+    activity: '穩定',
+    esgDir: '建築節能、熱能減碳',
+    note: '與 HVAC 及建築設備應用密切相關',
+    color: '#065f46',
+    companies: [
+      { name: 'Marubeni', type: '商社', role: '市場參加者', creditTypes: 'J-Credit / 再生能源熱', tags: ['能源轉型型', '交易窗口型'], score: 80, reason: '商社具備碳交易與海外網絡，積極佈局再生能源熱' },
+      { name: 'ENEOS', type: '能源', role: '市場參加者', creditTypes: 'J-Credit', tags: ['熱能減碳型'], score: 76, reason: '能源業積極採購木質生質能相關信用' },
+      { name: 'Daikin Industries', type: '空調設備', role: '市場參加者', creditTypes: 'J-Credit', tags: ['建築節能型'], score: 72, reason: '與 HVAC 建築設備節能應用高度相關' },
+    ],
+  },
+  {
+    name: '其他',
+    size: 6400,
+    cumulativeSize: 48000,
+    priceRange: '3,500–5,000',
+    activity: '低',
+    esgDir: '一般碳中和補充',
+    note: '特定需求，建議先評估其他信用類型',
+    color: '#6b7280',
+    companies: [
+      { name: 'Mazda', type: '汽車', role: '市場參加者', creditTypes: 'J-Credit', tags: ['供應鏈揭露型'], score: 70, reason: '汽車業供應鏈碳揭露需求，採購補充性碳信用' },
+      { name: 'Hitachi', type: '製造/電機', role: '市場參加者', creditTypes: 'J-Credit', tags: ['一般碳中和型'], score: 65, reason: '製造業補充性碳中和需求' },
+      { name: 'Panasonic', type: '電機', role: '市場參加者', creditTypes: 'J-Credit', tags: ['一般碳中和型'], score: 62, reason: '電機業一般碳中和補充採購' },
+    ],
+  },
+];
+
 export const engineData = {
   totalCO2Captured: 18420,
   totalMineralMaterial: 892,
