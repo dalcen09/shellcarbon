@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Treemap, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp, Activity, Building2, Lock, Star, FileSpreadsheet, FileText, ClipboardList, Phone, ChevronRight, ChevronLeft, RotateCcw } from 'lucide-react';
 import { marketData, creditTypeTreemapData } from '../data/mockData';
 
@@ -31,18 +31,59 @@ function getDiagnosticResult(answers: Record<number, string>) {
   return { type: '再生能源', reason: 'ESG 報告與供應鏈碳管理的首選，市場需求最強勁、流動性最高', difficulty: '低', suitable: 'ESG 導入初期企業、積極開拓日本市場的企業' };
 }
 
+type CreditTypeItem = typeof creditTypeTreemapData[number];
+
+function CompanyPanel({ item, count, isEnterprise, onUpgrade, t }: {
+  item: CreditTypeItem;
+  count: number;
+  isEnterprise: boolean;
+  onUpgrade: () => void;
+  t: (k: string) => string;
+}) {
+  return (
+    <div className="md:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+      <div className="p-3 text-white" style={{ backgroundColor: item.color }}>
+        <div className="text-sm font-bold leading-tight">{item.name}</div>
+        <div className="text-xs opacity-80 mt-0.5">¥{item.priceRange} / t</div>
+      </div>
+      <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
+        {item.companies.slice(0, count).map((co) => (
+          <div key={co.name} className="p-3">
+            <div className="flex items-start justify-between mb-1">
+              <div className="text-xs font-semibold text-gray-800 leading-tight">{co.name}</div>
+              <div className="text-xs font-bold px-1.5 py-0.5 rounded-full bg-shell-green/10 text-shell-green ml-2 flex-shrink-0">{co.score}</div>
+            </div>
+            <div className="text-xs text-gray-500 mb-1">{co.type} · {co.role}</div>
+            <div className="flex flex-wrap gap-1 mb-1">
+              {co.tags.map(tag => <span key={tag} className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-xs">{tag}</span>)}
+            </div>
+            <div className="text-xs text-gray-600 leading-relaxed">{co.reason}</div>
+          </div>
+        ))}
+      </div>
+      {!isEnterprise && (
+        <div className="px-3 py-2.5 border-t border-gray-100 bg-gray-50">
+          <button onClick={onUpgrade} className="w-full py-1.5 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
+            {t('p5.infoPanelCta')}
+          </button>
+          <p className="text-xs text-gray-400 text-center mt-1">{t('p5.infoPanelUpgrade')}</p>
+        </div>
+      )}
+      <div className="px-3 py-2 bg-amber-50 border-t border-amber-100 text-xs text-amber-700 leading-relaxed">
+        {t('p5.infoPanelDisclaimer')}
+      </div>
+    </div>
+  );
+}
+
 export default function Page5Market() {
   const { t } = useTranslation();
   const [plan, setPlan] = useState<Plan>('professional');
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [hoveredType, setHoveredType] = useState<string | null>(null);
   const [diagStep, setDiagStep] = useState<number>(-1);
   const [diagAnswers, setDiagAnswers] = useState<Record<number, string>>({});
 
   const isEnterprise = plan === 'enterprise';
-  const hoveredItem = hoveredType ? creditTypeTreemapData.find(ct => ct.name === hoveredType) : null;
-  const selectedItem = selectedType ? creditTypeTreemapData.find(ct => ct.name === selectedType) : null;
-  const panelItem = hoveredItem || selectedItem;
   const companyCount = isEnterprise ? 3 : 1;
   const diagResult = diagStep === 5 ? getDiagnosticResult(diagAnswers) : null;
   const diagResultItem = diagResult ? creditTypeTreemapData.find(ct => ct.name === diagResult.type) : null;
@@ -59,12 +100,18 @@ export default function Page5Market() {
     const map: Record<string, string> = { '再生能源': t('common.creditTypes.renewable'), '節能設備': t('common.creditTypes.efficiency'), '森林吸收': t('common.creditTypes.forest'), '其他': t('common.creditTypes.other') };
     return map[type] ?? type;
   }
-  const treeData = creditTypeTreemapData.map(ct => ({
+  const barData = creditTypeTreemapData.map(ct => ({
     name: ct.name,
     size: ct.size,
+    cumulativeSize: ct.cumulativeSize,
     color: ct.color,
     activity: ct.activity,
+    companies: ct.companies,
   }));
+
+  const activeItem = selectedType
+    ? creditTypeTreemapData.find(ct => ct.name === selectedType) ?? creditTypeTreemapData[0]
+    : creditTypeTreemapData[0];
 
   function handleDiagAnswer(optIdx: number) {
     const opt = DIAGNOSTIC_QUESTIONS[diagStep].opts[optIdx];
@@ -125,135 +172,57 @@ export default function Page5Market() {
 
       <div className="bg-shell-green/5 border border-shell-green/15 rounded-lg px-4 py-3 text-xs text-gray-600 leading-relaxed">{t('p5.marketNote')}</div>
 
-      {/* Treemap + Info Panel */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
-        {/* Treemap */}
-        <div className="md:col-span-3 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-sm font-semibold text-gray-700">{t('p5.treemapTitle')}</h2>
-          </div>
-          <p className="text-xs text-gray-400 mb-3">{t('p5.treemapHint')}</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <Treemap
-              data={treeData}
-              dataKey="size"
-              content={(props: any) => {
-                const { x, y, width, height, depth, name, color } = props;
-                if (!name || depth === 0 || width < 4 || height < 4) return <g />;
-                const isSelected = selectedType === name;
-                const isHovered = hoveredType === name;
-                const dimmed = (hoveredType !== null && !isHovered && !isSelected) || (selectedType !== null && !isSelected && !isHovered && hoveredType === null);
-                const item = creditTypeTreemapData.find(ct => ct.name === name);
-                const fillColor = color || item?.color || '#888';
-                return (
-                  <g
-                    onClick={() => setSelectedType(selectedType === name ? null : name)}
-                    onMouseEnter={() => setHoveredType(name)}
-                    onMouseLeave={() => setHoveredType(null)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <rect
-                      x={x + 3} y={y + 3}
-                      width={Math.max(0, width - 6)} height={Math.max(0, height - 6)}
-                      fill={fillColor}
-                      stroke="white"
-                      strokeWidth={isSelected ? 3 : 1}
-                      rx={6}
-                      opacity={dimmed ? 0.55 : 1}
-                    />
-                    {width > 85 && height > 48 && (
-                      <text x={x + 12} y={y + 24} fill="white" fontSize={12} fontWeight="700" pointerEvents="none">{name}</text>
-                    )}
-                    {width > 85 && height > 64 && (
-                      <text x={x + 12} y={y + 40} fill="rgba(255,255,255,0.8)" fontSize={10} pointerEvents="none">
-                        {Number(props.size || 0).toLocaleString()} t
-                      </text>
-                    )}
-                    {width > 85 && height > 82 && item && (
-                      <text x={x + 12} y={y + 56} fill="rgba(255,255,255,0.65)" fontSize={9} pointerEvents="none">
-                        {activityLabel(item.activity)}
-                      </text>
-                    )}
-                  </g>
-                );
-              }}
-            />
-          </ResponsiveContainer>
-        </div>
-
-        {/* Info Panel */}
-        <div className="md:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-          {panelItem ? (
-            <>
-              {/* Credit type header */}
-              <div className="p-4 text-white" style={{ backgroundColor: panelItem.color }}>
-                <div className="text-xs opacity-70 mb-0.5">{t('p5.treemapTitle')}</div>
-                <div className="font-bold text-base leading-tight">{panelItem.name}</div>
-                <div className="text-xs opacity-80 mt-0.5">{activityLabel(panelItem.activity)}</div>
-              </div>
-
-              {/* Stats */}
-              <div className="px-4 py-3 space-y-2 bg-gray-50 text-xs border-b border-gray-100">
-                <div className="flex justify-between"><span className="text-gray-500">{t('p5.infoPanelVolume')}</span><span className="font-mono font-semibold">{panelItem.size.toLocaleString()} t-CO₂</span></div>
-                <div className="flex justify-between"><span className="text-gray-500">{t('p5.infoPanelPrice')}</span><span className="font-mono font-semibold">¥{panelItem.priceRange} / t</span></div>
-                <div className="flex justify-between gap-3"><span className="text-gray-500 flex-shrink-0">{t('p5.infoPanelEsg')}</span><span className="text-gray-700 text-right">{panelItem.esgDir}</span></div>
-              </div>
-
-              {/* ShellCarbon note */}
-              <div className="px-4 py-2.5 text-xs text-gray-500 italic border-b border-gray-100">{panelItem.note}</div>
-
-              {/* Company cards (only when selected) */}
-              {selectedItem && selectedItem.name === panelItem.name ? (
-                <div className="flex-1 overflow-y-auto">
-                  <div className="px-4 py-2 bg-gray-50 border-b border-gray-100">
-                    <span className="text-xs font-semibold text-gray-600">{t('p5.infoPanelCompany')}</span>
-                    {!isEnterprise && <span className="ml-2 text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">1 / 3</span>}
-                  </div>
-                  {selectedItem.companies.slice(0, companyCount).map((co, i) => (
-                    <div key={co.name} className={`px-4 py-3 ${i > 0 ? 'border-t border-gray-100' : ''}`}>
-                      <div className="flex items-start justify-between mb-1.5">
-                        <div className="text-xs font-semibold text-gray-800 leading-tight">{co.name}</div>
-                        <div className="text-xs font-bold px-1.5 py-0.5 rounded-full bg-shell-green/10 text-shell-green ml-2 flex-shrink-0">{co.score}</div>
-                      </div>
-                      <div className="text-xs text-gray-500 mb-1">{co.type} · {co.role}</div>
-                      <div className="flex flex-wrap gap-1 mb-1.5">
-                        {co.tags.map(tag => <span key={tag} className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-xs">{tag}</span>)}
-                      </div>
-                      <div className="text-xs text-gray-600 leading-relaxed">{co.reason}</div>
-                    </div>
+      {/* Monthly Bar Chart + Company Cards */}
+      <div>
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">{t('p5.treemapTitle')} · {t('p5.treemapMonthly')}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+          {/* Bar chart */}
+          <div className="md:col-span-3 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+            <p className="text-xs text-gray-400 mb-3">{t('p5.treemapHint')}</p>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart layout="vertical" data={barData} barSize={22} margin={{ left: 8, right: 36, top: 4, bottom: 4 }}>
+                <XAxis type="number" tick={{ fontSize: 10 }} tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}k`} axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={62} axisLine={false} tickLine={false} />
+                <Tooltip formatter={(v: any) => [`${Number(v).toLocaleString()} t-CO₂`, '']} />
+                <Bar dataKey="size" radius={[0, 4, 4, 0]} style={{ cursor: 'pointer' }}
+                  onClick={(d: any) => setSelectedType(selectedType === d.name ? null : d.name)}>
+                  {barData.map((d) => (
+                    <Cell key={d.name} fill={d.color} opacity={selectedType && selectedType !== d.name ? 0.45 : 1} />
                   ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-                  {/* Disclaimer */}
-                  <div className="px-4 py-2.5 bg-amber-50 border-t border-amber-100 text-xs text-amber-700 leading-relaxed">
-                    {t('p5.infoPanelDisclaimer')}
-                  </div>
-
-                  {/* Upgrade prompt for Pro */}
-                  {!isEnterprise && (
-                    <div className="px-4 py-3 border-t border-gray-100 bg-gray-50">
-                      <button onClick={() => setPlan('enterprise')} className="w-full py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark mb-2">
-                        {t('p5.infoPanelCta')}
-                      </button>
-                      <p className="text-xs text-gray-400 text-center leading-relaxed">{t('p5.infoPanelUpgrade')}</p>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex-1 flex items-center justify-center p-5 text-center">
-                  <p className="text-xs text-gray-400">{t('p5.infoPanelClick')}</p>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                <Activity size={20} className="text-gray-300" />
-              </div>
-              <p className="text-xs text-gray-400 leading-relaxed">{t('p5.infoPanelHover')}</p>
-            </div>
-          )}
+          {/* Company cards panel */}
+          <CompanyPanel item={activeItem} count={companyCount} isEnterprise={isEnterprise} onUpgrade={() => setPlan('enterprise')} t={t} />
         </div>
       </div>
+
+      {/* Enterprise: Historical Cumulative Bar Chart + 3 Company Cards */}
+      {isEnterprise && (
+        <div>
+          <h2 className="text-sm font-semibold text-gray-700 mb-3">{t('p5.treemapTitle')} · {t('p5.treemapCumulative')}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+            <div className="md:col-span-3 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+              <ResponsiveContainer width="100%" height={220}>
+                <BarChart layout="vertical" data={barData} barSize={22} margin={{ left: 8, right: 36, top: 4, bottom: 4 }}>
+                  <XAxis type="number" tick={{ fontSize: 10 }} tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}k`} axisLine={false} tickLine={false} />
+                  <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={62} axisLine={false} tickLine={false} />
+                  <Tooltip formatter={(v: any) => [`${Number(v).toLocaleString()} t-CO₂`, '']} />
+                  <Bar dataKey="cumulativeSize" radius={[0, 4, 4, 0]} style={{ cursor: 'pointer' }}
+                    onClick={(d: any) => setSelectedType(selectedType === d.name ? null : d.name)}>
+                    {barData.map((d) => (
+                      <Cell key={d.name} fill={d.color} opacity={selectedType && selectedType !== d.name ? 0.45 : 1} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <CompanyPanel item={activeItem} count={3} isEnterprise={true} onUpgrade={() => {}} t={t} />
+          </div>
+        </div>
+      )}
 
       {/* Business tips */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

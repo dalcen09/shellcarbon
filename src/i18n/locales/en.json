@@ -107,7 +107,7 @@
       "dataImport": "Data Import", "docVerify": "Document Verification",
       "purposeConfirm": "Purpose Confirmation", "japanWindow": "Japan Market Window Confirmation", "flowCreate": "Purchase / Declaration Flow Created"
     },
-    "ctaGenerate": "Generate J-Credit Onboarding Proposal",
+    "ctaGenerate": "Generate Pre-Import Emissions Checklist",
     "ctaBuy": "Go to Purchase Application",
     "ctaEsg": "Generate ESG Document Draft"
   },
@@ -147,7 +147,7 @@
       "advisor-confirm": "Third-Party Advisor Confirmation", "risk-note": "Risk Notation Table"
     },
     "ctaPack": "Generate Supply Chain Reply Package",
-    "ctaExport": "Export ESG Documents",
+    "ctaExport": "Export Integrated ESG Document",
     "ctaEnterprise": "Apply for Enterprise Document Access"
   },
   "p5": {

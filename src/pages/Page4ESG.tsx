@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Copy, Download, Save, Send, FileEdit, AlertCircle, Lock, Package, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { Copy, Download, Save, Send, FileEdit, AlertCircle, Lock, Package, ExternalLink } from 'lucide-react';
 import { esgDocuments } from '../data/mockData';
 
 type PlanType = 'professional' | 'enterprise';
@@ -57,20 +57,6 @@ export default function Page4ESG() {
           <div className="w-2 h-2 rounded-full bg-shell-green" />
           <span className="text-xs font-semibold text-shell-green">{t(`common.plan.${plan}`)} {t('p4.planBadge')}</span>
         </div>
-      </div>
-
-      {/* Supply chain client reply pack button */}
-      <div className="bg-gradient-to-br from-shell-green/5 to-shell-teal/5 border border-shell-green/20 rounded-xl p-4 flex items-start gap-4">
-        <div className="p-2.5 bg-shell-green/10 rounded-lg flex-shrink-0">
-          <Package size={18} className="text-shell-green" />
-        </div>
-        <div className="flex-1">
-          <div className="text-sm font-semibold text-gray-800 mb-0.5">{t('p4.supplyChainPackBtn')}</div>
-          <p className="text-xs text-gray-500 leading-relaxed">{t('p4.supplyChainPackDesc')}</p>
-        </div>
-        <button className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
-          <ArrowUpRight size={13} /> {t('p4.supplyChainPackBtn')}
-        </button>
       </div>
 
       {/* Top: Document type icons */}

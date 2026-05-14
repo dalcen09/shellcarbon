@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import { Building2, MapPin, Briefcase, User, ChevronDown, ChevronUp, Lightbulb, ArrowRight, Calendar } from 'lucide-react';
+import { Building2, MapPin, Briefcase, User, ChevronDown, ChevronUp } from 'lucide-react';
 import { company, carbonAssets, transactions } from '../data/mockData';
 
 function StatCard({ label, value, sub, color = 'text-gray-900' }: { label: string; value: string; sub?: string; color?: string }) {
@@ -14,13 +14,6 @@ function StatCard({ label, value, sub, color = 'text-gray-900' }: { label: strin
   );
 }
 
-function CtaBar({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-wrap gap-3 pt-2">
-      {children}
-    </div>
-  );
-}
 
 export default function Page1Overview() {
   const { t } = useTranslation();
@@ -191,38 +184,6 @@ export default function Page1Overview() {
         </div>}
       </div>
 
-      {/* Recommendation block */}
-      <div className="bg-gradient-to-br from-shell-green/5 to-shell-teal/5 border border-shell-green/20 rounded-xl p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <Lightbulb size={16} className="text-shell-green" />
-          <h2 className="text-sm font-semibold text-shell-green-dark">{t('p1.recTitle')}</h2>
-        </div>
-        <p className="text-xs text-gray-600 leading-relaxed mb-4">{t('p1.recDesc')}</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-          {[
-            { label: t('p1.recPlannable'), value: t('p1.recPlannableVal') },
-            { label: t('p1.recUse'),       value: t('p1.recUseVal') },
-            { label: t('p1.recAction'),    value: t('p1.recActionVal') },
-            { label: t('p1.recNext'),      value: t('p1.recNextVal') },
-          ].map((item) => (
-            <div key={item.label} className="bg-white/70 rounded-lg px-3 py-2">
-              <div className="text-xs text-gray-400">{item.label}</div>
-              <div className="text-sm font-semibold text-gray-800">{item.value}</div>
-            </div>
-          ))}
-        </div>
-        <CtaBar>
-          <button className="flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark transition-colors">
-            <Calendar size={12} /> {t('p1.ctaBook')}
-          </button>
-          <button className="flex items-center gap-1.5 px-4 py-2 border border-shell-green text-shell-green text-xs font-semibold rounded-lg hover:bg-shell-green/5 transition-colors">
-            {t('p1.ctaGenerate')}
-          </button>
-          <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50 transition-colors">
-            {t('p1.ctaGo')} <ArrowRight size={12} />
-          </button>
-        </CtaBar>
-      </div>
     </div>
   );
 }

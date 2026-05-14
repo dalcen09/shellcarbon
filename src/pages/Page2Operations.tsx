@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShoppingCart, TrendingDown, ArrowRightLeft, Stamp, CheckCircle2, Circle, AlertCircle, Users, PlayCircle, ClipboardList, HelpCircle } from 'lucide-react';
+import { ShoppingCart, TrendingDown, ArrowRightLeft, Stamp, CheckCircle2, Circle, AlertCircle, Users, ClipboardList } from 'lucide-react';
 import { applications } from '../data/mockData';
 
 function ProgressBar({ steps, currentStep }: { steps: string[]; currentStep: number }) {
@@ -81,14 +81,8 @@ export default function Page2Operations() {
 
       {/* CTA bar */}
       <div className="flex flex-wrap gap-3">
-        <button className="flex items-center gap-1.5 px-4 py-2 bg-shell-green text-white text-xs font-semibold rounded-lg hover:bg-shell-green-dark">
-          <PlayCircle size={13} /> {t('p2.ctaStart')}
-        </button>
         <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50">
           <ClipboardList size={13} /> {t('p2.ctaChecklist')}
-        </button>
-        <button className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50">
-          <HelpCircle size={13} /> {t('p2.ctaGuide')}
         </button>
       </div>
 

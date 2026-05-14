@@ -107,7 +107,7 @@
       "dataImport": "データインポート", "docVerify": "書類確認",
       "purposeConfirm": "用途確認", "japanWindow": "日本市場窓口確認", "flowCreate": "購入・宣言フロー作成"
     },
-    "ctaGenerate": "J-Credit導入提案を生成",
+    "ctaGenerate": "排出量導入前チェックリスト生成",
     "ctaBuy": "購入申請へ移動",
     "ctaEsg": "ESG文書草稿を生成"
   },
@@ -147,7 +147,7 @@
       "advisor-confirm": "第三者顧問確認書", "risk-note": "リスク注記表"
     },
     "ctaPack": "サプライチェーン顧客回答パッケージを生成",
-    "ctaExport": "ESG文書を出力",
+    "ctaExport": "統合ESG文書を出力",
     "ctaEnterprise": "エンタープライズ文書機能を申請"
   },
   "p5": {
